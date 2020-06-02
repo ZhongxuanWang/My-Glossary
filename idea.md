@@ -5,4 +5,6 @@
 5. Add mobile end
 6. Add email notification
 
+7. Generate graph of learning curve
+
 'add your first word' gui
