@@ -1,12 +1,14 @@
-from flask import render_template
+from flask import render_template, Blueprint
 
-from login_manager import login_required
+# The . is a shortcut that tells it search in current package before rest of the PYTHONPATH
+from .auth import login_required
 
 __author__ = 'Zhongxuan Wang'
 __doc__ = 'iGlossary'
 
 
-app =
+app = Blueprint('app', __name__)
+
 
 @app.route('/', methods=['Get'])
 def index():

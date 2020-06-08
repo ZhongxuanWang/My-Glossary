@@ -1,15 +1,29 @@
-{% extends 'auth/login_base.html' %}
-
-{% block header %}
-    <h1>{% block title %}Main{% endblock %}</h1>
-{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
-    <form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Log In">
-    </form>
+    <div class="column is-4 is-offset-4">
+        <h3 class="title">Login</h3>
+        <div class="box">
+            <form method="POST" action="/login">
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="password" name="password" placeholder="Your Password">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        Remember me
+                    </label>
+                </div>
+                <button class="button is-block is-info is-large is-fullwidth">Login</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
