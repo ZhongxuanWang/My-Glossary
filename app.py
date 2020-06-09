@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import render_template, Blueprint
-from flask_login import LoginManager, login_required, current_user
+from flask_login import login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
+
 
 # The . is a shortcut that tells it search in current package before rest of the PYTHONPATH
 # from .auth import login_required
@@ -19,8 +20,8 @@ db = SQLAlchemy()
 def create_app():
     appl = Flask(__name__)
 
-    appl.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    appl.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://users/users.db'
+    appl.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
+    appl.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
 
     db.init_app(appl)
 
@@ -28,24 +29,24 @@ def create_app():
     from auth import auth as auth_blueprint
     appl.register_blueprint(auth_blueprint)
 
-    # blueprint for non-auth parts of app
     appl.register_blueprint(app_blueprint)
-    db.init_app(app_blueprint)
+    return appl
 
-    login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
-    login_manager.init_app(appl)
+    # login_manager = LoginManager()
+    # login_manager.login_view = 'auth.login'
+    # login_manager.init_app(appl)
 
-    db.create_all()
+    # db.create_all()
 
-    from .user import User
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        # since the user_id is just the primary key of our user table, use it in the query for the user
-        return User.query.get(int(user_id))
-
-    appl.run(debug=True)
+    # from .user import User
+    #
+    # @login_manager.user_loader
+    # def load_user(user_id):
+    #     # since the user_id is just the primary key of our user table, use it in the query for the user
+    #     return User.query.get(int(user_id))
+    #
+    # appl.run(debug=True)
+    # return appl
 
 
 @app_blueprint.route('/', methods=['GET'])
