@@ -14,7 +14,7 @@ auth = Blueprint('auth', __name__)
 # db.create_all()
 
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET'])
 def login():
     return render_template('auth/login.html')
 

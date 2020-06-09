@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, Blueprint
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -11,46 +11,16 @@ __author__ = 'Zhongxuan Wang'
 __doc__ = 'iGlossary'
 
 app_blueprint = Blueprint('app', __name__)
+app = Flask(__name__)
 
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
 
 
-def create_app():
-    appl = Flask(__name__)
-
-    appl.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
-    appl.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
-
-    db.init_app(appl)
-
-    # blueprint for auth routes in our app
-    from auth import auth as auth_blueprint
-    appl.register_blueprint(auth_blueprint)
-
-    appl.register_blueprint(app_blueprint)
-    return appl
-
-    # login_manager = LoginManager()
-    # login_manager.login_view = 'auth.login'
-    # login_manager.init_app(appl)
-
-    # db.create_all()
-
-    # from .user import User
-    #
-    # @login_manager.user_loader
-    # def load_user(user_id):
-    #     # since the user_id is just the primary key of our user table, use it in the query for the user
-    #     return User.query.get(int(user_id))
-    #
-    # appl.run(debug=True)
-    # return appl
-
-
-@app_blueprint.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
+    print("aaa")
     return render_template('index.html')
 
 
@@ -81,6 +51,34 @@ def write_file(filename, file_content):
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
+
+
+def create_app():
+
+    app.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
+
+    db.init_app(app)
+
+    # # blueprint for auth routes in our app
+    # from auth import auth as auth_blueprint
+    # appl.register_blueprint(auth_blueprint)
+    #
+    # appl.register_blueprint(app_blueprint)
+    # return appl
+
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    from user import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        # since the user_id is just the primary key of our user table, use it in the query for the user
+        return User.query.get(int(user_id))
+
+    app.run(debug=True)
 
 
 if __name__ == '__main__':
