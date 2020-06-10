@@ -10,7 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 __author__ = 'Zhongxuan Wang'
 __doc__ = 'iGlossary'
 
-app_blueprint = Blueprint('app', __name__)
+# app_blueprint = Blueprint('app', __name__)
 app = Flask(__name__)
 
 
@@ -20,7 +20,7 @@ db = SQLAlchemy()
 
 @app.route('/', methods=['GET'])
 def index():
-    print("aaa")
+    print("Index")
     return render_template('index.html')
 
 
@@ -47,7 +47,7 @@ def write_file(filename, file_content):
     return ''
 
 
-@app_blueprint.route('/profile')
+@app.route('/profile')
 @login_required
 def profile():
     return render_template('profile.html', name=current_user.name)
@@ -60,22 +60,22 @@ def create_app():
 
     db.init_app(app)
 
-    # # blueprint for auth routes in our app
-    # from auth import auth as auth_blueprint
-    # appl.register_blueprint(auth_blueprint)
-    #
-    # appl.register_blueprint(app_blueprint)
+    # blueprint for auth routes in our app
+    from auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
+    # app.register_blueprint(app_blueprint)
     # return appl
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    from user import User
-
     @login_manager.user_loader
     def load_user(user_id):
+        print('in load user')
         # since the user_id is just the primary key of our user table, use it in the query for the user
+        from user import User
         return User.query.get(int(user_id))
 
     app.run(debug=True)

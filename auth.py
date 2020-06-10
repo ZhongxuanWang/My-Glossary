@@ -16,12 +16,14 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET'])
 def login():
+    print("Login")
     return render_template('auth/login.html')
 
 
 @auth.route('/signup')
 def signup():
-    return render_template('auth/register.html')
+    print("Signup")
+    return render_template('auth/signup.html')
 
 
 # def user_loader(func):
