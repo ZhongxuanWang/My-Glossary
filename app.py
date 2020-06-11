@@ -19,38 +19,39 @@ db = SQLAlchemy()
 
 
 @app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
     print("Index")
     return render_template('index.html')
 
 
-# @login_required
-def read_file(filename):
-    try:
-        with open(filename) as f:
-            return f.readline()
-    except IOError:
-        print("IO ERROR Raised. Reading file failed,")
-        f = open(filename, "w")
-        f.write('email@example.com')
-        f.close()
-        return 'content'
+# # @login_required
+# def read_file(filename):
+#     try:
+#         with open(filename) as f:
+#             return f.readline()
+#     except IOError:
+#         print("IO ERROR Raised. Reading file failed,")
+#         f = open(filename, "w")
+#         f.write('email@example.com')
+#         f.close()
+#         return 'content'
+#
+#
+# # @login_required
+# def write_file(filename, file_content):
+#     try:
+#         with open(filename, 'w') as f:
+#             f.write(file_content)
+#     except IOError:
+#         print("IO ERROR Raised. Writing file failed,")
+#     return ''
 
 
 # @login_required
-def write_file(filename, file_content):
-    try:
-        with open(filename, 'w') as f:
-            f.write(file_content)
-    except IOError:
-        print("IO ERROR Raised. Writing file failed,")
-    return ''
-
-
 @app.route('/profile')
-@login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', name=current_user)
 
 
 def create_app():
@@ -76,7 +77,7 @@ def create_app():
         print('in load user')
         # since the user_id is just the primary key of our user table, use it in the query for the user
         from user import User
-        return User.query.get(int(user_id))
+        return User.query.get(user_id)
 
     app.run(debug=True)
 
