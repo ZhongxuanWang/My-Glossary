@@ -66,7 +66,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
 
     # app.register_blueprint(app_blueprint)
-    # return appl
+    # return app
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
