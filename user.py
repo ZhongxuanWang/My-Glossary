@@ -22,8 +22,9 @@ class User(db.Model, UserMixin):
         """True, as all users are active."""
         return True
 
+    # IF YOU ENCOUNTERED SOME ERRORS, READ THE DOCUMENT FIRST ! YOU MAY FIND THINGS USEFUL!
     def get_id(self):
-        """Return the email address to satisfy Flask-Login's requirements."""
+        """Return the id to satisfy Flask-Login's requirements."""
         return self.id
 
     def is_authenticated(self):

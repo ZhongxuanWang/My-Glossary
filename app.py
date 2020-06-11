@@ -75,9 +75,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         print('in load user function')
+        # print('User ID:', user_id)
         # since the user_id is just the primary key of our user table, use it in the query for the user
         from user import User
-        return User.query.get(user_id)
+        return User.query.get(int(user_id))
 
     app.run(debug=True)
 
