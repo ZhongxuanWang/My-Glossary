@@ -48,10 +48,10 @@ def index():
 #     return ''
 
 
-# @login_required
 @app.route('/profile')
+@login_required
 def profile():
-    return render_template('profile.html', name=current_user)
+    return render_template('profile.html', name=current_user.name)
 
 
 def create_app():
@@ -74,7 +74,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        print('in load user')
+        print('in load user function')
         # since the user_id is just the primary key of our user table, use it in the query for the user
         from user import User
         return User.query.get(user_id)
