@@ -18,13 +18,13 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET'])
 def login():
     print("Login")
-    return render_template('auth/login.html', current_user=current_user)
+    return render_template('auth/login.html')
 
 
 @auth.route('/signup')
 def signup():
     print("Signup in get")
-    return render_template('auth/signup.html', current_user=current_user)
+    return render_template('auth/signup.html')
 
 
 # def user_loader(func):
@@ -100,4 +100,4 @@ def cancel():
         return redirect(url_for('index'))
     db.session.delete(current_user)
     db.session.commit()
-    return render_template('index.html', base_msg='Your account has been canceled', current_user=current_user)
+    return render_template('index.html', base_msg='Your account has been canceled')

@@ -22,7 +22,7 @@ db = SQLAlchemy()
 @app.route('/index', methods=['GET'])
 def index():
     print("Index")
-    return render_template('index.html', current_user=current_user)
+    return render_template('index.html')
 
 
 # # @login_required
@@ -51,7 +51,7 @@ def index():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name, current_user=current_user)
+    return render_template('profile.html', name=current_user.name)
 
 
 def create_app():
