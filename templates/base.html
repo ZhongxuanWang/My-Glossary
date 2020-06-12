@@ -15,7 +15,11 @@
     <div class="hero-head">
         <nav class="navbar">
             <div class="container">
-
+                {% if base_msg %}
+                    <div class="notification is-info">
+                        {{ base_msg }}
+                    </div>
+                {% endif %}
                 <div id="navbarMenuHeroA" class="navbar-menu">
                     <div class="navbar-end">
                         <a href="{{ url_for('index') }}" class="navbar-item">

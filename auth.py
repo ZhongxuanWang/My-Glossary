@@ -69,7 +69,8 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
 
-    user = User.query.filter_by(email=email).first() # if this returns a user, then the email already exists in database
+    # if this returns a user, then the email already exists in database
+    user = User.query.filter_by(email=email).first()
 
     if user:  # if a user is found, we want to redirect back to signup page so user can try again
         flash('Email address already exists')
@@ -89,3 +90,14 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@auth.route('/cancel account')
+@login_required
+def cancel():
+    from app import current_user
+    if current_user is None:
+        return redirect(url_for('index'))
+    db.session.delete(current_user)
+    db.session.commit()
+    return render_template('index.html', base_msg='Your account has been canceled')
