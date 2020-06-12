@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
 
@@ -18,13 +18,13 @@ auth = Blueprint('auth', __name__)
 @auth.route('/login', methods=['GET'])
 def login():
     print("Login")
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', current_user=current_user)
 
 
 @auth.route('/signup')
 def signup():
     print("Signup in get")
-    return render_template('auth/signup.html')
+    return render_template('auth/signup.html', current_user=current_user)
 
 
 # def user_loader(func):
@@ -100,4 +100,4 @@ def cancel():
         return redirect(url_for('index'))
     db.session.delete(current_user)
     db.session.commit()
-    return render_template('index.html', base_msg='Your account has been canceled')
+    return render_template('index.html', base_msg='Your account has been canceled', current_user=current_user)
