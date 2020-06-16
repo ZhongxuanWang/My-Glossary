@@ -10,7 +10,6 @@ from flask_sqlalchemy import SQLAlchemy
 __author__ = 'Zhongxuan Wang'
 __doc__ = 'iGlossary'
 
-# app_blueprint = Blueprint('app', __name__)
 app = Flask(__name__)
 
 
@@ -65,8 +64,21 @@ def create_app():
     from auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    # app.register_blueprint(app_blueprint)
-    # return app
+    app_blueprint = Blueprint('app', __name__)
+    app.register_blueprint(app_blueprint)
+    return app
+
+
+def run_app():
+
+    app.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
+
+    db.init_app(app)
+
+    # blueprint for auth routes in our app
+    from auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -84,4 +96,4 @@ def create_app():
 
 
 if __name__ == '__main__':
-    create_app()
+    run_app()
