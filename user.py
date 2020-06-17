@@ -1,3 +1,5 @@
+from functools import wraps
+
 from flask_login import UserMixin
 
 from app import db
@@ -12,6 +14,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100))
     authenticated = db.Column(db.Boolean, default=False)
+
+    words = db.Column(db.String)
+    number_of_words = 0
 
     def __init__(self, email, name, password):
         self.email = email
@@ -34,3 +39,13 @@ class User(db.Model, UserMixin):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return False
+
+    def get_words(self):
+        return self.word.split(',')
+
+    def add_word(self, word):
+        self.number_of_words += 1
+        self.word += ',' + word
+
+    def get_words_len(self):
+        return self.number_of_words

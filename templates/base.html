@@ -13,13 +13,13 @@
 
 <section class="hero {% block style %}{% endblock %} is-fullheight">
     <div class="hero-head">
+        {% if base_msg %}
+            <div class="notification is-info">
+                {{ base_msg }}
+            </div>
+        {% endif %}
         <nav class="navbar">
             <div class="container">
-                {% if base_msg %}
-                    <div class="notification is-info">
-                        {{ base_msg }}
-                    </div>
-                {% endif %}
                 <div id="navbarMenuHeroA" class="navbar-menu">
                     <div class="navbar-end">
 {#                        {% if current_user.is_authenticated %}#}

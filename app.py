@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import render_template, Blueprint
+from flask import Flask, request, flash, render_template, Blueprint
 from flask_login import login_required, current_user, LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
@@ -53,10 +52,24 @@ def profile():
     return render_template('profile.html', user=current_user)
 
 
-@app.route('/learn')
+@app.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    if request.method == 'GET':
+        return render_template('search.html')
+    else:
+        return render_template('display.html', )
+
+
+@app.route('/learn', methods=['GET', 'POST'])
 @login_required
 def learn():
-    return render_template('learn.html')
+    if request.method == 'GET':
+        if current_user.get_words_len() == 0:
+            return render_template('learn.html', base_msg='You have no record here. Please add your first word!')
+        return render_template('learn.html')
+    else:
+        return render_template('learn.html', )
 
 
 @app.route('/error/<issue>')
