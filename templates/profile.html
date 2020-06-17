@@ -1,8 +1,43 @@
 {% extends "base.html" %}
 
+{% block title %}Profile{% endblock %}
+
+{% block before_herobody %}
+{#    <div class="tabs is-centered is-boxed">#}
+{#        <ul>#}
+{#            <li class="is-active">#}
+{#                <a>#}
+{#                    <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>#}
+{#                    <span>General</span>#}
+{#                </a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a>#}
+{#                    <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>#}
+{#                    <span>Setting</span>#}
+{#                </a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a>#}
+{#                    <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>#}
+{#                    <span>Account</span>#}
+{#                </a>#}
+{#            </li>#}
+{#        </ul>#}
+{#    </div>#}
+{% endblock %}
+
+{#Content are all centered#}
 {% block content %}
     <h1 class="title">
-        Welcome {{ name }}!
+        Welcome {{ user.name }}!
     </h1>
-    <a class="has-background-link" href="{{ url_for('auth.cancel') }}">Close my account</a>
+    <a class="button is-info" href="{{ url_for('auth.account_set') }}">Account Setting</a>
+    <a class="button is-danger" href="{{ url_for('auth.cancel') }}">Cancel my account</a>
+
+{% endblock %}
+
+{% block body %}
+
+
 {% endblock %}

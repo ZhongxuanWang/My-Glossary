@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My-Glossary</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <title>{% block title %}{% endblock %}_My-Glossary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css" />
 </head>
 
 <body>
-<section class="hero is-primary is-fullheight">
 
+<section class="hero {% block style %}{% endblock %} is-fullheight">
     <div class="hero-head">
         <nav class="navbar">
             <div class="container">
@@ -22,12 +22,20 @@
                 {% endif %}
                 <div id="navbarMenuHeroA" class="navbar-menu">
                     <div class="navbar-end">
+{#                        {% if current_user.is_authenticated %}#}
+{#                            <a href="{{ url_for('search') }}" class="navbar-item">#}
+{#                                Search#}
+{#                            </a>#}
+{#                        {% endif %}#}
                         <a href="{{ url_for('index') }}" class="navbar-item">
                             Home
                         </a>
                         {% if current_user.is_authenticated %}
                             <a href="{{ url_for('profile') }}" class="navbar-item">
                                 Profile
+                            </a>
+                            <a href="{{ url_for('learn') }}" class="navbar-item">
+                                Learn
                             </a>
                         {% endif %}
                         {% if not current_user.is_authenticated %}
@@ -50,12 +58,14 @@
             </div>
         </nav>
     </div>
-
+{% block before_herobody %}
+{% endblock %}
     <div class="hero-body">
-        <div class="container has-text-centered">
-            {% block content %}
-            {% endblock %}
-        </div>
+
+        <div class="container has-text-centered">{% block content %}{% endblock %}</div>
+        {% block body %}
+        {% endblock %}
+
     </div>
 </section>
 </body>

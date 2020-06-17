@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
+from app import error
 
 from user import User
 
@@ -90,6 +91,29 @@ def signup_post():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@auth.route('/account_set')
+@login_required
+def account_set():
+    if request.method == 'GET':
+        return render_template('setting.html')
+    else:
+        new_email = request.form['email']
+        new_psw = request.form['psw']
+
+        if new_psw == '' or new_email == '':
+            error('new psw or email is left blank')
+            return
+
+        user = User.query.get_or_404(current_user.id)
+
+        # Accessing through form in edit
+        user.email = new_email
+        user.psw = new_psw
+
+        db.session.commit()
+        return redirect('/profile')
 
 
 @auth.route('/cancel account')

@@ -50,7 +50,18 @@ def index():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', user=current_user)
+
+
+@app.route('/learn')
+@login_required
+def learn():
+    return render_template('learn.html')
+
+
+@app.route('/error/<issue>')
+def error(issue):
+    return render_template('error.html', issue=issue)
 
 
 def create_app():
