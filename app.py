@@ -59,7 +59,8 @@ def search():
     if request.method == 'GET':
         return render_template('search.html')
     else:
-        return render_template('display.html', )
+        return 'You searched ' + request.form['word']
+        # return render_template('display.html', )
 
 
 @app.route('/learn', methods=['GET', 'POST'])

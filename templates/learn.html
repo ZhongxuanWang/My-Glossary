@@ -1,3 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if base_msg %}
+        <a class="button is-primary is-rounded" href="/search">Add First Word</a>
+    {% endif %}
 {% endblock %}
