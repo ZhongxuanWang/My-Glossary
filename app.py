@@ -2,6 +2,8 @@ from flask import Flask, request, flash, render_template, Blueprint
 from flask_login import login_required, current_user, LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
+# TODO add except catch statement for all db.commit()
+
 
 # The . is a shortcut that tells it search in current package before rest of the PYTHONPATH
 # from .auth import login_required
@@ -10,7 +12,6 @@ __author__ = 'Zhongxuan Wang'
 __doc__ = 'iGlossary'
 
 app = Flask(__name__)
-
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
@@ -78,7 +79,6 @@ def error(issue):
 
 
 def create_app():
-
     app.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
 
@@ -93,8 +93,13 @@ def create_app():
     return app
 
 
-def run_app():
+"""
+Call this function when you want to test your program on a development server
+Rename __init__ to wsgi file if you want to deploy on production server
+"""
 
+
+def run_app():
     app.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
 

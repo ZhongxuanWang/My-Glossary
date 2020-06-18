@@ -81,8 +81,11 @@ def signup_post():
     new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
 
     # add the new user to the database
-    db.session.add(new_user)
-    db.session.commit()
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except:
+        pass
     return redirect(url_for('auth.login'))
 
 
@@ -111,8 +114,10 @@ def account_set():
         # Accessing through form in edit
         user.email = new_email
         user.psw = new_psw
-
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            pass
         return redirect('/profile')
 
 
@@ -122,6 +127,9 @@ def cancel():
     from app import current_user
     if current_user is None:
         return redirect(url_for('index'))
-    db.session.delete(current_user)
-    db.session.commit()
+    try:
+        db.session.delete(current_user)
+        db.session.commit()
+    except:
+        pass
     return render_template('index.html', base_msg='Your account has been canceled')
