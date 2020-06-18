@@ -61,7 +61,7 @@ def login_post():
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
-    return redirect(url_for('profile'))
+    return redirect(url_for('index'))
 
 
 @auth.route('/signup', methods=['POST'])
