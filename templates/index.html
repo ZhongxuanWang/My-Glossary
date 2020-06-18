@@ -11,5 +11,7 @@
 
     {% if not current_user.is_authenticated %}
         <h1 class="subtitle">Login to get started!</h1>
+        <a class="button is-link" href="{{ url_for('auth.login') }}">Login</a>
+        <a class="button is-link" href="{{ url_for('auth.signup') }}">Signup</a>
     {% endif %}
 {% endblock %}

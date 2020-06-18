@@ -68,7 +68,7 @@ def search():
 def learn():
     if request.method == 'GET':
         if current_user.get_words_len() == 0:
-            return render_template('learn.html', base_msg='You have no record here. Please add your first word!')
+            return render_template('learn.html', base_msg='Please add your first word.')
         return render_template('learn.html')
     else:
         return render_template('learn.html', )
