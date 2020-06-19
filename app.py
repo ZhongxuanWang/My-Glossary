@@ -1,9 +1,7 @@
 from flask import Flask, request, flash, render_template, Blueprint
 from flask_login import login_required, current_user, LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
-# TODO add except catch statement for all db.commit()
-
+import requests as req
 
 # The . is a shortcut that tells it search in current package before rest of the PYTHONPATH
 # from .auth import login_required
@@ -59,8 +57,11 @@ def search():
     if request.method == 'GET':
         return render_template('search.html')
     else:
-        return 'You searched ' + request.form['word']
-        # return render_template('display.html', )
+        # return 'You searched ' + request.form['word']
+        word = request.form['word']
+        c = req.get('https://www.dictionary.com/browse/' + word)
+
+        return render_template('display.html')
 
 
 @app.route('/learn', methods=['GET', 'POST'])
@@ -68,7 +69,7 @@ def search():
 def learn():
     if request.method == 'GET':
         if current_user.get_words_len() == 0:
-            return render_template('learn.html', base_msg='Please add your first word.')
+            return render_template('learn.html', base_msg='Add your first word to learn!')
         return render_template('learn.html')
     else:
         return render_template('learn.html', )

@@ -84,7 +84,7 @@ def signup_post():
         db.session.add(new_user)
         db.session.commit()
     except:
-        pass
+        return 'Unable to add the user to database.'
     return redirect(url_for('auth.login'))
 
 
@@ -115,7 +115,7 @@ def account_set():
         try:
             db.session.commit()
         except:
-            pass
+            return 'unable to commit the change to the server.'
         return redirect('/profile')
 
 
@@ -129,5 +129,5 @@ def cancel():
         db.session.delete(current_user)
         db.session.commit()
     except:
-        pass
+        return 'unable to delete the user.'
     return render_template('index.html', base_msg='Your account has been canceled')

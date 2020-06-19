@@ -3,3 +3,4 @@ venv/
 .idea/
 users/users.db
 !/old.py
+!/test/scrape_website.py
