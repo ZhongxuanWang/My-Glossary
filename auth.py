@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from app import db
-from app import error
 
 from user import User
 
@@ -106,8 +105,7 @@ def account_set():
         new_psw = request.form['psw']
 
         if new_psw == '' or new_email == '':
-            error('new psw or email is left blank')
-            return
+            return 'new password or email address was left blank'
 
         user = User.query.get_or_404(current_user.id)
 

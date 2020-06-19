@@ -74,11 +74,6 @@ def learn():
         return render_template('learn.html', )
 
 
-@app.route('/error/<issue>')
-def error(issue):
-    return render_template('error.html', issue=issue)
-
-
 def create_app():
     app.config['SECRET_KEY'] = 'wwzzxxsecretekeytodatabase'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users/users.db'
