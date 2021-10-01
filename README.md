@@ -14,7 +14,7 @@ cd My-Glossary
 Deploy virtual environment.
 ```
 virtualenv venv
-source ./venv/bin/activiate
+source ./venv/bin/activate
 ```
 Install requirements
 ```bash 
